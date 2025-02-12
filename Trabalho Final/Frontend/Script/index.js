@@ -26,6 +26,7 @@ const eventSource = new EventSource('http://localhost:5000/stream');
             messagesDiv.scrollTop = messagesDiv.scrollHeight;
         }
 
+    
         function sendMessage() {
             const content = inputField.value.trim();
             if (content === '') return;
@@ -53,3 +54,4 @@ const eventSource = new EventSource('http://localhost:5000/stream');
                 sendMessage();
             }
         });
+        
