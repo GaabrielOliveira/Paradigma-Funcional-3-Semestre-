@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map em JavaScript</title>
+</head>
+<body>
+    <h2>Tabuadas</h2>
+    <b>
+        <p id="demo"> </p>
+    </b>
+
+    <script>
+        tabuada = (fator) => {
+                const numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+                return numeros.map(numero => `${fator} x ${numero} = ${fator * numero}`).join("<br>");              
+            }
+            
+        const numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        const todasTabuadas = numeros.map(fator => `Tabuada do ${fator}:<br>${tabuada(fator)}<br>`).join("<br>");
+        document.getElementById("demo").innerHTML = todasTabuadas;
+    </script>
+</body>
+</html>

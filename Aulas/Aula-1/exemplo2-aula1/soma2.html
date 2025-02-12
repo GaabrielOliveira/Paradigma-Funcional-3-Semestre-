@@ -1,0 +1,24 @@
+<!-- ---------------------------- Lambda -------------------------------- -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Soma de Dois Números</h1>
+    Numero 1: <input type="text" id="num1"><br>
+    Numero 2: <input type="text" id="num2"><br>
+    
+    <button type="button" onclick="somar()">Somar</button>
+
+<script>
+    const somar = () => {
+        let numero1 = parseFloat(document.getElementById("num1").value)
+        let numero2 = parseFloat(document.getElementById("num2").value)
+            return alert("Soma = " +(numero1 + numero2))
+    }
+</script>
+</body>
+</html>

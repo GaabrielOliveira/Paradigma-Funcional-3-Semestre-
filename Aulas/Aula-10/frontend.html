@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+<html lang="pt-BR">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Formulário Bootstrap com Axios</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1 class="text-center mt-4">Formulário</h1>
+
+   
+
+    <!-- Formulário de Cadastro -->
+
+    <div class="mb-3">
+
+      <label for="nome" class="form-label">Nome</label>
+
+      <input type="text" class="form-control" id="nome" placeholder="Digite seu nome">
+
+    </div>
+
+   
+
+    <div class="mb-3">
+
+      <label for="idade" class="form-label">Idade</label>
+
+      <input type="number" class="form-control" id="idade" placeholder="Digite sua idade">
+
+    </div>
+
+   
+
+    <div class="mb-3">
+
+      <label for="profissao" class="form-label">Profissão</label>
+
+      <input type="text" class="form-control" id="profissao" placeholder="Digite sua profissão">
+
+    </div>
+
+    
+
+    <button type="button" class="btn btn-primary" id="btnSalvar">Salvar</button>
+
+   
+
+    <!-- Área para exibir mensagens -->
+
+    <div id="mensagem" class="mt-3"></div>
+
+   
+
+    <hr>
+
+   
+
+    <!-- Campo para filtro de idade -->
+
+    <div class="mb-3">
+
+      <label for="filtroIdade" class="form-label">Filtrar por Idade (mínima)</label>
+
+      <!-- O evento onchange chama a função aplicarFiltro() sempre que o valor for alterado -->
+
+      <input type="number" class="form-control" id="filtroIdade" placeholder="Digite a idade mínima para filtrar">
+
+    </div>
+
+   
+
+    <!-- Botão para carregar os dados -->
+
+    <button type="button" class="btn btn-info mt-3" id="btnCarregar">Carregar Dados</button>
+
+   
+
+    <!-- Tabela para exibir os dados -->
+
+    <table class="table table-striped mt-3" id="tabelaDados" style="display: none;">
+
+      <thead>
+
+        <tr>
+
+          <th>ID</th>
+
+          <th>Nome</th>
+
+          <th>Idade</th>
+
+          <th>Profissão</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        <!-- Linhas serão adicionadas dinamicamente -->
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+  <script>
+
+    // Variável para armazenar os dados carregados da API
+
+    let dadosRecebidos = [];
+
+    // Função para renderizar a tabela com os dados informados
+
+    function renderTable(dados) {
+
+      const tabela = document.getElementById('tabelaDados');
+
+      const tbody = tabela.querySelector('tbody');
+
+      tbody.innerHTML = ''; // Limpa dados anteriores
+
+      dados.forEach(dado => {
+
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+
+          <td>${dado.idPessoa}</td>
+
+          <td>${dado.nome}</td>
+
+          <td>${dado.idade}</td>
+
+          <td>${dado.profissao}</td>
+
+        `;
+
+        tbody.appendChild(row);
+
+      });
+
+      // Exibe a tabela se houver dados; caso contrário, oculta-a
+
+      tabela.style.display = dados.length > 0 ? 'table' : 'none';
+
+    }
+
+    // Função que aplica o filtro usando o valor do campo "filtroIdade"
+
+    function aplicarFiltro() {
+
+      const filtroValue = document.getElementById('filtroIdade').value;
+
+      let dadosFiltrados = dadosRecebidos;
+
+      if (filtroValue) {
+
+        // Filtra os dados para incluir apenas os registros com idade >= filtroValue
+
+        dadosFiltrados = dadosRecebidos.filter(dado => Number(dado.idade) >= Number(filtroValue));
+
+      }
+
+      renderTable(dadosFiltrados);
+
+    }
+
+    // Evento de clique para carregar os dados via API
+
+    document.getElementById('btnCarregar').addEventListener('click', async () => {
+
+      try {
+
+        const response = await axios.get('http://localhost:3000/api/getdados');
+
+        // Supondo que a resposta possua um objeto "dados"
+
+        dadosRecebidos = response.data.dados;
+
+        // Aplica o filtro (caso o campo já tenha algum valor) e renderiza a tabela
+
+        aplicarFiltro();
+
+        document.getElementById('mensagem').innerHTML =
+
+          '<div class="alert alert-info">Dados carregados com sucesso!</div>';
+
+      } catch (error) {
+
+        document.getElementById('mensagem').innerHTML =
+
+          '<div class="alert alert-danger">Erro ao carregar os dados. Tente novamente.</div>';
+
+      }
+
+    });
+
+    // Evento onchange para o campo de filtro, que chama a função aplicarFiltro()
+
+    document.getElementById('filtroIdade').addEventListener('change', aplicarFiltro);
+
+  </script>
+
+  <script>
+
+    // Evento para salvar os dados do formulário via API
+
+    document.getElementById('btnSalvar').addEventListener('click', async () => {
+
+      // Captura os valores dos campos do formulário
+
+      const nome = document.getElementById('nome').value;
+
+      const idade = Number(document.getElementById('idade').value);
+
+      const profissao = document.getElementById('profissao').value;
+
+     console.log(nome, idade, profissao);
+
+      try {
+
+        const response = await axios.post('http://localhost:3000/api/dados', { nome, idade, profissao });
+
+        document.getElementById('mensagem').innerHTML =
+
+          '<div class="alert alert-success">Dados salvos com sucesso!</div>';
+
+      } catch (error) {
+
+        const errorMessage =
+
+          error.response?.data?.message || 'Erro ao salvar os dados. Tente novamente.';
+
+        document.getElementById('mensagem').innerHTML =
+
+          `<div class="alert alert-danger">${errorMessage}</div>`;
+
+      }
+
+    });
+
+  </script>
+
+ 
+
+</body>
+
+</html>
+

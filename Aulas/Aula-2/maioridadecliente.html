@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clientes Maiores de Idade</title>
+</head>
+<body>
+    <h1>Clientes Maiores de Idade:</h1>
+    <ul id="lista-maioridade"></ul>
+
+    <script>
+        const clientes = [
+            {"nome": "José", "idade":26},
+            {"nome": "Carlos", "idade":55},
+            {"nome": "Manoel", "idade":5},
+            {"nome": "Paula", "idade":2}
+        ];
+
+        const maioridade = clientes.filter(({idade}) => idade > 18);
+        // const maioridade = clientes.filter(({idade}) => idade < 30);
+
+        console.log(maioridade);
+
+        const listaMaioridade = document.getElementById("lista-maioridade")
+
+        maioridade.forEach(cliente => {
+            const item = document.createElement('li')
+            item.textContent = `${cliente.nome} - ${cliente.idade} anos`
+            listaMaioridade.appendChild(item)
+        });
+    </script>
+</body>
+</html>

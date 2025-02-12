@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Map em JavaScript</title>
+</head>
+<body>
+    <h2>Tabuadas</h2>
+    <b>
+        <p id="demo"> </p>
+    </b>
+
+    <script>
+        tabuada = (fator) => {
+            return fator * 2
+    }
+    
+        const numeros = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        const novoArray = numeros.map(tabuada)
+        document.getElementById("demo").innerHTML = novoArray
+
+    </script>
+</body>
+</html>
