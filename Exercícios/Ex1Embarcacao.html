@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício 1 (Embarcações)</title>
+</head>
+<body>
+
+    <h1>Embarcações pequenas(Miúdas):</h1>
+    <ul id="lista-embarcacoes"></ul>
+
+    <script>
+        const barcos = [
+            { tamanho: 4, potenciaMotor: 45, aberto: true, cabine: false },
+            { tamanho: 6, potenciaMotor: 70, aberto: false, cabine: true },
+            { tamanho: 5, potenciaMotor: 55, aberto: true, cabine: false },
+            { tamanho: 7, potenciaMotor: 80, aberto: true, cabine: false },
+            { tamanho: 8, potenciaMotor: 65, aberto: false, cabine: true },
+            { tamanho: 4, potenciaMotor: 30, aberto: false, cabine: false },
+            { tamanho: 9, potenciaMotor: 75, aberto: true, cabine: false },
+            { tamanho: 7, potenciaMotor: 60, aberto: true, cabine: true },
+            { tamanho: 6, potenciaMotor: 45, aberto: false, cabine: false },
+            { tamanho: 5, potenciaMotor: 35, aberto: true, cabine: false },
+            { tamanho: 8, potenciaMotor: 50, aberto: true, cabine: true },
+            { tamanho: 9, potenciaMotor: 85, aberto: false, cabine: true },
+            { tamanho: 3, potenciaMotor: 25, aberto: true, cabine: false },
+            { tamanho: 6, potenciaMotor: 90, aberto: false, cabine: false },
+            { tamanho: 4, potenciaMotor: 40, aberto: true, cabine: false },
+            { tamanho: 7, potenciaMotor: 65, aberto: false, cabine: true },
+            { tamanho: 5, potenciaMotor: 55, aberto: true, cabine: false },
+            { tamanho: 6, potenciaMotor: 75, aberto: false, cabine: true },
+            { tamanho: 4, potenciaMotor: 50, aberto: true, cabine: false },
+            { tamanho: 8, potenciaMotor: 80, aberto: true, cabine: true },
+            { tamanho: 5, potenciaMotor: 30, aberto: false, cabine: false },
+            { tamanho: 7, potenciaMotor: 95, aberto: true, cabine: false },
+            { tamanho: 6, potenciaMotor: 45, aberto: false, cabine: true },
+            { tamanho: 3, potenciaMotor: 20, aberto: true, cabine: false },
+            { tamanho: 9, potenciaMotor: 55, aberto: true, cabine: true },
+            { tamanho: 7, potenciaMotor: 60, aberto: false, cabine: false },
+            { tamanho: 4, potenciaMotor: 35, aberto: true, cabine: false },
+            { tamanho: 6, potenciaMotor: 50, aberto: false, cabine: false },
+            { tamanho: 8, potenciaMotor: 40, aberto: true, cabine: true },
+            { tamanho: 5, potenciaMotor: 75, aberto: false, cabine: true },
+            { tamanho: 7, potenciaMotor: 90, aberto: true, cabine: false },
+            { tamanho: 4, potenciaMotor: 45, aberto: true, cabine: false },
+            { tamanho: 6, potenciaMotor: 60, aberto: false, cabine: true },
+            { tamanho: 8, potenciaMotor: 70, aberto: true, cabine: true },
+            { tamanho: 5, potenciaMotor: 25, aberto: true, cabine: false },
+            { tamanho: 9, potenciaMotor: 85, aberto: false, cabine: false },
+            { tamanho: 7, potenciaMotor: 55, aberto: true, cabine: true },
+            { tamanho: 3, potenciaMotor: 15, aberto: true, cabine: false },
+            { tamanho: 6, potenciaMotor: 65, aberto: false, cabine: true },
+            { tamanho: 4, potenciaMotor: 35, aberto: true, cabine: false },
+            { tamanho: 8, potenciaMotor: 95, aberto: true, cabine: true },
+            { tamanho: 7, potenciaMotor: 50, aberto: false, cabine: false },
+            { tamanho: 5, potenciaMotor: 40, aberto: true, cabine: false },
+            { tamanho: 9, potenciaMotor: 60, aberto: true, cabine: true },
+            { tamanho: 3, potenciaMotor: 20, aberto: true, cabine: false },
+            { tamanho: 6, potenciaMotor: 30, aberto: false, cabine: true },
+            { tamanho: 4, potenciaMotor: 25, aberto: true, cabine: false },
+            { tamanho: 8, potenciaMotor: 75, aberto: true, cabine: false },
+            { tamanho: 5, potenciaMotor: 45, aberto: false, cabine: true },
+            { tamanho: 7, potenciaMotor: 35, aberto: true, cabine: false },
+            { tamanho: 6, potenciaMotor: 55, aberto: false, cabine: true }
+        ];
+
+        function ehBarcoPequeno({ tamanho, potenciaMotor, aberto, cabine }) {
+            return (
+                tamanho <= 5 || 
+                (tamanho <= 8 && aberto && potenciaMotor <= 50 && !cabine) ||
+                (tamanho <= 8 && !aberto && potenciaMotor <= 50 && !cabine)
+            );
+        }
+
+        function exibirBarcosPequenos() {
+            const listaBarcos = document.getElementById('lista-embarcacoes');
+            listaBarcos.innerHTML = ''; 
+
+            const barcosPequenos = barcos.filter(ehBarcoPequeno);
+
+            barcosPequenos.forEach((barco, index) => {
+                const item = document.createElement('li');
+                item.textContent = `Barco ${index + 1}: Tamanho = ${barco.tamanho}m, Potência do Motor = ${barco.potenciaMotor}HP, Aberto = ${barco.aberto}, Cabine = ${barco.cabine}`;
+                listaBarcos.appendChild(item);
+            });
+        }
+
+        exibirBarcosPequenos();
+    </script>
+</body>
+</html>
